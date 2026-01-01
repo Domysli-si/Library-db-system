@@ -1,16 +1,16 @@
-IF OBJECT_ID('loan', 'U') IS NOT NULL DROP TABLE loan;
-IF OBJECT_ID('book_category', 'U') IS NOT NULL DROP TABLE book_category;
-IF OBJECT_ID('book', 'U') IS NOT NULL DROP TABLE book;
-IF OBJECT_ID('author', 'U') IS NOT NULL DROP TABLE author;
-IF OBJECT_ID('category', 'U') IS NOT NULL DROP TABLE category;
-IF OBJECT_ID('library_user', 'U') IS NOT NULL DROP TABLE library_user;
+-- Drop tables if they exist
+DROP TABLE IF EXISTS loan;
+DROP TABLE IF EXISTS book_category;
+DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS author;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS library_user;
 
-
+-- Tables
 CREATE TABLE author (
     id INT IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
-
 
 CREATE TABLE category (
     id INT IDENTITY PRIMARY KEY,
@@ -18,7 +18,6 @@ CREATE TABLE category (
     category_type VARCHAR(20) NOT NULL
         CHECK (category_type IN ('fiction', 'nonfiction', 'study'))
 );
-
 
 CREATE TABLE library_user (
     id INT IDENTITY PRIMARY KEY,
@@ -35,21 +34,17 @@ CREATE TABLE book (
     price FLOAT NOT NULL,
     available BIT NOT NULL DEFAULT 1,
     published_date DATE NOT NULL,
-
     CONSTRAINT fk_book_author
         FOREIGN KEY (author_id) REFERENCES author(id)
 );
 
-
 CREATE TABLE book_category (
     book_id INT NOT NULL,
     category_id INT NOT NULL,
-
     CONSTRAINT pk_book_category PRIMARY KEY (book_id, category_id),
     CONSTRAINT fk_bc_book FOREIGN KEY (book_id) REFERENCES book(id),
     CONSTRAINT fk_bc_category FOREIGN KEY (category_id) REFERENCES category(id)
 );
-
 
 CREATE TABLE loan (
     id INT IDENTITY PRIMARY KEY,
@@ -58,7 +53,6 @@ CREATE TABLE loan (
     loan_date DATETIME NOT NULL DEFAULT GETDATE(),
     return_date DATETIME NULL,
     returned BIT NOT NULL DEFAULT 0,
-
     CONSTRAINT fk_loan_book FOREIGN KEY (book_id) REFERENCES book(id),
     CONSTRAINT fk_loan_user FOREIGN KEY (user_id) REFERENCES library_user(id)
 );

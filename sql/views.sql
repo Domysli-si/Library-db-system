@@ -1,4 +1,3 @@
-
 CREATE VIEW vw_books_overview AS
 SELECT
     b.id,
@@ -9,7 +8,7 @@ SELECT
     b.published_date
 FROM book b
 JOIN author a ON b.author_id = a.id;
-
+GO
 
 CREATE VIEW vw_loan_report AS
 SELECT
@@ -20,4 +19,5 @@ SELECT
 FROM library_user u
 LEFT JOIN loan l ON u.id = l.user_id
 GROUP BY u.full_name;
+GO
 
