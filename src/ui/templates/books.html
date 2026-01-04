@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>Books</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Books</h1>
+<a href="{{ url_for('index') }}">Home</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author ID</th>
+        <th>Price</th>
+        <th>Available</th>
+        <th>Published Date</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author_id }}</td>
+        <td>{{ book.price }}</td>
+        <td>{{ 'Yes' if book.available else 'No' }}</td>
+        <td>{{ book.published_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
+

@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <title>Loan Report</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Loan Report</h1>
+<a href="{{ url_for('index') }}">Home</a>
+<table border="1">
+    <tr>
+        <th>User Name</th>
+        <th>Total Loans</th>
+        <th>Active Loans</th>
+        <th>Last Loan Date</th>
+    </tr>
+    {% for row in report %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
+

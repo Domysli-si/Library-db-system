@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <title>Library System</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Library System</h1>
+<ul>
+    <li><a href="{{ url_for('books') }}">View Books</a></li>
+    <li><a href="{{ url_for('add_book') }}">Add Book</a></li>
+    <li><a href="{{ url_for('loan_book') }}">Loan Book</a></li>
+    <li><a href="{{ url_for('import_json') }}">Import JSON</a></li>
+    <li><a href="{{ url_for('report') }}">Report</a></li>
+</ul>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for msg in messages %}
+      <li>{{ msg }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</body>
+</html>
+

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <title>Loan Book</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Loan Book</h1>
+<a href="{{ url_for('index') }}">Home</a>
+<form method="post">
+    <label>Book ID: <input type="number" name="book_id" required></label><br>
+    <label>User ID: <input type="number" name="user_id" required></label><br>
+    <input type="submit" value="Loan Book">
+</form>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for msg in messages %}
+      <li>{{ msg }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</body>
+</html>
+
