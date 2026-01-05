@@ -5,6 +5,7 @@ from src.repositories.author_repository import AuthorRepository
 from src.repositories.book_category_repository import BookCategoryRepository
 from src.repositories.category_repository import CategoryRepository
 from src.db.connection import DatabaseConnection, DatabaseError
+from src.models.loan import Loan
 from datetime import datetime
 
 
@@ -18,7 +19,7 @@ class LibraryService:
     def __init__(self, db_conn: DatabaseConnection):
         self.db_conn = db_conn
 
-    def loan_book(self, book_id: int, user_id: int):
+    def loan_book(self, book_id: int, user_id: int) -> Loan:
         """
         Loan a book to a user. Transactional: Book availability + Loan record
         """
@@ -27,6 +28,7 @@ class LibraryService:
                 book_repo = BookRepository(conn)
                 loan_repo = LoanRepository(conn)
 
+                # Get the book
                 book = book_repo.get_by_id(book_id)
                 if not book:
                     raise ValueError("Book not found")
@@ -38,17 +40,14 @@ class LibraryService:
                 book_repo.update(book)
 
                 # Create loan record
-                loan = LoanRepository(conn).add(
-                    loan_repo.add(
-                        type('Loan', (), {
-                            'book_id': book_id,
-                            'user_id': user_id,
-                            'loan_date': datetime.now(),
-                            'return_date': None,
-                            'returned': False
-                        })()
-                    )
+                loan = Loan(
+                    book_id=book_id,
+                    user_id=user_id,
+                    loan_date=datetime.now(),
+                    return_date=None,
+                    returned=False
                 )
+                loan_repo.add(loan)
 
                 return loan
 
@@ -64,8 +63,9 @@ class LibraryService:
                 loan_repo = LoanRepository(conn)
                 book_repo = BookRepository(conn)
 
-                loan = loan_repo.get_all()
-                loan = next((l for l in loan if l.id == loan_id), None)
+                # Get the loan
+                loans = loan_repo.get_all()
+                loan = next((l for l in loans if l.id == loan_id), None)
                 if not loan:
                     raise ValueError("Loan not found")
                 if loan.returned:
@@ -78,8 +78,9 @@ class LibraryService:
 
                 # Update book availability
                 book = book_repo.get_by_id(loan.book_id)
-                book.available = True
-                book_repo.update(book)
+                if book:
+                    book.available = True
+                    book_repo.update(book)
 
         except Exception as e:
             raise DatabaseError(f"Return transaction failed: {e}")

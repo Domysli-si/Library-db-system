@@ -11,7 +11,7 @@
     <tr>
         <th>ID</th>
         <th>Title</th>
-        <th>Author ID</th>
+        <th>Author</th>
         <th>Price</th>
         <th>Available</th>
         <th>Published Date</th>
@@ -20,7 +20,7 @@
     <tr>
         <td>{{ book.id }}</td>
         <td>{{ book.title }}</td>
-        <td>{{ book.author_id }}</td>
+        <td>{{ book.author_name }}</td>
         <td>{{ book.price }}</td>
         <td>{{ 'Yes' if book.available else 'No' }}</td>
         <td>{{ book.published_date }}</td>

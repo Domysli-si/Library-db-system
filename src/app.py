@@ -1,10 +1,12 @@
 from flask import Flask
 from src.ui.routes import init_routes
+import os
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'supersecretkey'  # needed for flash messages
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ui", "templates")
+app = Flask(__name__, template_folder=template_dir)
+app.config['SECRET_KEY'] = 'supersecretkey'
 
-# Initialize all routes
+# Inicializace rout
 init_routes(app)
 
 if __name__ == "__main__":

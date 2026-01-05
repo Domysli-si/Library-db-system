@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from src.db.connection import DatabaseConnection, DatabaseError
+from src.repositories.author_repository import AuthorRepository
 from src.repositories.book_repository import BookRepository
 from src.repositories.user_repository import UserRepository
 from src.repositories.loan_repository import LoanRepository
@@ -23,7 +24,14 @@ def init_routes(app: Flask):
         try:
             with db_conn.transaction() as conn:
                 book_repo = BookRepository(conn)
+                author_repo = AuthorRepository(conn)
+
                 books = book_repo.get_all()
+
+                for book in books:
+                    author = author_repo.get_by_id(book.author_id)
+                    book.author_name = author.name if author else "Unknown"
+
             return render_template("books.html", books=books)
         except DatabaseError as e:
             flash(str(e))
@@ -48,7 +56,6 @@ def init_routes(app: Flask):
                     else:
                         author_id = author_repo.add(type('Author', (), {'name': author_name})())
 
-                    # Add book
                     book_repo.add(type('Book', (), {
                         'title': title,
                         'author_id': author_id,
@@ -71,10 +78,10 @@ def init_routes(app: Flask):
             user_id = int(request.form["user_id"])
             try:
                 library_service.loan_book(book_id, user_id)
-                flash("Book loaned successfully!")
+                flash("Book loaned successfully!", "success")
             except DatabaseError as e:
-                flash(str(e))
-            return redirect(url_for("books"))
+                flash(str(e), "error")
+            return redirect(url_for("loan_book"))
 
         return render_template("loan_book.html")
 
