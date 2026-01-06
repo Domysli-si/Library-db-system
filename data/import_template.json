@@ -1,0 +1,72 @@
+[
+    {
+        "title": "Foundation",
+        "author": "Isaac Asimov",
+        "price": 299.90,
+        "published_date": "1951-05-01",
+        "categories": ["fiction", "study"]
+    },
+    {
+        "title": "I, Robot",
+        "author": "Isaac Asimov",
+        "price": 250.00,
+        "published_date": "1950-12-02",
+        "categories": ["fiction"]
+    },
+    {
+        "title": "Dune",
+        "author": "Frank Herbert",
+        "price": 399.99,
+        "published_date": "1965-08-01",
+        "categories": ["fiction", "study"]
+    },
+    {
+        "title": "Neuromancer",
+        "author": "William Gibson",
+        "price": 299.50,
+        "published_date": "1984-07-01",
+        "categories": ["fiction"]
+    },
+    {
+        "title": "The Pragmatic Programmer",
+        "author": "Andrew Hunt",
+        "price": 450.00,
+        "published_date": "1999-10-30",
+        "categories": ["nonfiction", "study"]
+    },
+    {
+        "title": "Clean Code",
+        "author": "Robert C. Martin",
+        "price": 399.00,
+        "published_date": "2008-08-01",
+        "categories": ["nonfiction", "study"]
+    },
+    {
+        "title": "1984",
+        "author": "George Orwell",
+        "price": 199.90,
+        "published_date": "1949-06-08",
+        "categories": ["fiction"]
+    },
+    {
+        "title": "Brave New World",
+        "author": "Aldous Huxley",
+        "price": 189.00,
+        "published_date": "1932-01-01",
+        "categories": ["fiction"]
+    },
+    {
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "price": 320.00,
+        "published_date": "1937-09-21",
+        "categories": ["fiction"]
+    },
+    {
+        "title": "Introduction to Algorithms",
+        "author": "Thomas H. Cormen",
+        "price": 890.00,
+        "published_date": "1990-01-01",
+        "categories": ["nonfiction", "study"]
+    }
+]

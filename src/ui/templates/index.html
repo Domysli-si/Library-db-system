@@ -5,23 +5,57 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<h1>Library System</h1>
+<h1>Library Management System</h1>
+
+<h2>Books</h2>
 <ul>
     <li><a href="{{ url_for('books') }}">View Books</a></li>
-    <li><a href="{{ url_for('add_book') }}">Add Book</a></li>
-    <li><a href="{{ url_for('loan_book') }}">Loan Book</a></li>
-    <li><a href="{{ url_for('import_json') }}">Import JSON</a></li>
-    <li><a href="{{ url_for('report') }}">Report</a></li>
+    <li><a href="{{ url_for('add_book_with_categories') }}">Add Book with Categories</a></li>
 </ul>
-{% with messages = get_flashed_messages() %}
+
+<h2>Authors</h2>
+<ul>
+    <li><a href="{{ url_for('authors') }}">View Authors</a></li>
+    <li><a href="{{ url_for('add_author') }}">Add Author</a></li>
+</ul>
+
+<h2>Categories</h2>
+<ul>
+    <li><a href="{{ url_for('categories') }}">View Categories</a></li>
+    <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
+</ul>
+
+<h2>Users</h2>
+<ul>
+    <li><a href="{{ url_for('users') }}">View Users</a></li>
+    <li><a href="{{ url_for('add_user') }}">Add User</a></li>
+</ul>
+
+<h2>Loans</h2>
+<ul>
+    <li><a href="{{ url_for('loans') }}">View Loans</a></li>
+    <li><a href="{{ url_for('loan_book') }}">Loan Book</a></li>
+</ul>
+
+<h2>Data Management</h2>
+<ul>
+    <li><a href="{{ url_for('import_json') }}">Import JSON</a></li>
+</ul>
+
+<h2>Reports</h2>
+<ul>
+    <li><a href="{{ url_for('report') }}">Books by Author & Category</a></li>
+    <li><a href="{{ url_for('loan_report') }}">Loan Statistics</a></li>
+</ul>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <ul>
-    {% for msg in messages %}
-      <li>{{ msg }}</li>
+    <div class="messages">
+    {% for category, msg in messages %}
+      <div class="message {{ category }}">{{ msg }}</div>
     {% endfor %}
-    </ul>
+    </div>
   {% endif %}
 {% endwith %}
 </body>
 </html>
-
