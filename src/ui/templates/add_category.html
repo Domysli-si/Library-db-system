@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <title>Add Category</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Add Category</h1>
+<a href="{{ url_for('index') }}">Home</a> | <a href="{{ url_for('categories') }}">Back to Categories</a>
+
+<form method="post">
+    <label>Name: <input type="text" name="name" required></label><br>
+    <label>Type:
+        <select name="category_type" required>
+            <option value="">-- Select Type --</option>
+            <option value="fiction">Fiction</option>
+            <option value="nonfiction">Non-fiction</option>
+            <option value="study">Study</option>
+        </select>
+    </label><br>
+    <input type="submit" value="Add Category">
+</form>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="messages">
+    {% for category, msg in messages %}
+      <div class="message {{ category }}">{{ msg }}</div>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+</body>
+</html>

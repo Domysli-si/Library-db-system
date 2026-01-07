@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <title>Add Book with Categories</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Add Book with Categories</h1>
+<a href="{{ url_for('index') }}">Home</a> | <a href="{{ url_for('books') }}">Back to Books</a>
+
+<form method="post">
+    <label>Title: <input type="text" name="title" required></label><br>
+    <label>Author: <input type="text" name="author" required></label><br>
+    <label>Price: <input type="number" step="0.01" name="price" required></label><br>
+    <label>Published Date: <input type="date" name="published_date" required></label><br>
+    
+    <fieldset>
+        <legend>Categories (select at least one):</legend>
+        {% for category in categories %}
+        <label>
+            <input type="checkbox" name="categories" value="{{ category.id }}">
+            {{ category.name }} ({{ category.category_type }})
+        </label><br>
+        {% endfor %}
+    </fieldset>
+    
+    <input type="submit" value="Add Book">
+</form>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="messages">
+    {% for category, msg in messages %}
+      <div class="message {{ category }}">{{ msg }}</div>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+</body>
+</html>

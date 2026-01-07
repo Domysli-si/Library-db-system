@@ -140,3 +140,14 @@ ul {
 ul li {
     margin: 5px 0;
 }
+
+/* V src/static/style.css přidej: */
+form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+form input[type="submit"] {
+    margin: 0;
+}

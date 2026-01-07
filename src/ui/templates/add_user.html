@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <title>Add User</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Add Library User</h1>
+<a href="{{ url_for('index') }}">Home</a> | <a href="{{ url_for('users') }}">Back to Users</a>
+
+<form method="post">
+    <label>Full Name: <input type="text" name="full_name" required></label><br>
+    <label>Email: <input type="email" name="email" required></label><br>
+    <input type="submit" value="Add User">
+</form>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="messages">
+    {% for category, msg in messages %}
+      <div class="message {{ category }}">{{ msg }}</div>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+</body>
+</html>

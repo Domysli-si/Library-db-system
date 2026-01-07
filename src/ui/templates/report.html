@@ -1,28 +1,45 @@
 <!doctype html>
 <html>
 <head>
-    <title>Loan Report</title>
+    <title>Books Report</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<h1>Loan Report</h1>
+<h1>Books by Author & Category Report</h1>
+<p><strong>Report from 3 tables:</strong> book, author, category (with aggregations)</p>
 <a href="{{ url_for('index') }}">Home</a>
-<table border="1">
+
+<table>
     <tr>
-        <th>User Name</th>
-        <th>Total Loans</th>
-        <th>Active Loans</th>
-        <th>Last Loan Date</th>
+        <th>Author</th>
+        <th>Category Type</th>
+        <th>Total Books</th>
+        <th>Avg Price</th>
+        <th>Min Price</th>
+        <th>Max Price</th>
+        <th>Available Books</th>
     </tr>
     {% for row in report %}
     <tr>
-        <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
+        <td>{{ row[0] if row[0] else '-' }}</td>
+        <td>{{ row[1] if row[1] else '-' }}</td>
         <td>{{ row[2] }}</td>
-        <td>{{ row[3] }}</td>
+        <td>{{ "%.2f"|format(row[3]) if row[3] else '-' }}</td>
+        <td>{{ "%.2f"|format(row[4]) if row[4] else '-' }}</td>
+        <td>{{ "%.2f"|format(row[5]) if row[5] else '-' }}</td>
+        <td>{{ row[6] }}</td>
     </tr>
     {% endfor %}
 </table>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="messages">
+    {% for category, msg in messages %}
+      <div class="message {{ category }}">{{ msg }}</div>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 </body>
 </html>
-
