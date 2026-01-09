@@ -1,8 +1,8 @@
 {
-    "server": "localhost,1433",
-    "database": "library",
-    "username": "SA",
-    "password": "YourStrong!Passw0rd",
+    "server": "",
+    "database": "",
+    "username": "",
+    "password": "",
     "driver": "ODBC Driver 17 for SQL Server"
 }
 
