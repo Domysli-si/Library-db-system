@@ -41,94 +41,58 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Konfigurace databáze
+## 4. Konfigurace aplikace
 
-### Krok 3: Vytvoření databáze
-
-Otevřete SQL Server Management Studio (nebo Azure Data Studio) a vytvořte novou databázi:
-
-```sql
-CREATE DATABASE library_db;
-```
-
-**Očekávaný výsledek:** Databáze `library_db` je vytvořena.
-
-### Krok 4: Import databázové struktury
-
-Spusťte SQL skripty v tomto pořadí:
-
-1. **DDL (tabulky):**
-```bash
-# V SSMS nebo Azure Data Studio otevřete soubor:
-sql/ddl.sql
-# A spusťte ho (F5)
-```
-
-**Očekávaný výsledek:** 
-- 6 tabulek vytvořeno: `author`, `category`, `library_user`, `book`, `book_category`, `loan`
-- Žádné chyby
-
-2. **Views:**
-```bash
-# Otevřete a spusťte:
-sql/views.sql
-```
-
-**Očekávaný výsledek:**
-- 2 views vytvořeny: `vw_books_overview`, `vw_loan_report`
-- Žádné chyby
-
-### Krok 5: Vytvoření uživatelského účtu (volitelné)
-
-Pokud chcete použít samostatný účet pro aplikaci:
-
-```sql
-CREATE LOGIN library_app WITH PASSWORD = 'StrongPassword123!';
-CREATE USER library_app FOR LOGIN library_app;
-
-ALTER ROLE db_datareader ADD MEMBER library_app;
-ALTER ROLE db_datawriter ADD MEMBER library_app;
-```
-
-**Očekávaný výsledek:** Uživatel `library_app` má přístup k databázi.
-
----
-
-## 5. Konfigurace aplikace
-
-### Krok 6: Nastavení config.json
+### Krok 3: Nastavení config.json
 
 Otevřete soubor `config/config.json` a vyplňte údaje:
 
 ```json
 {
     "server": "localhost",
-    "database": "library_db",
-    "username": "library_app",
-    "password": "StrongPassword123!",
+    "database": "library",
+    "username": "sa",
+    "password": "your_password",
     "driver": "ODBC Driver 17 for SQL Server"
 }
 ```
 
-**Poznámka:** Pokud používáte Windows Authentication, použijte:
-```json
-{
-    "server": "localhost",
-    "database": "library_db",
-    "username": "",
-    "password": "",
-    "driver": "ODBC Driver 17 for SQL Server"
-}
-```
-A připojovací string v kódu upravte na `Trusted_Connection=yes;`.
+**Poznámka:** Pro školní PC obvykle:
+- server: "localhost"
+- database: "library"
+- username: "sa"
+- password: "student" (nebo jiné podle nastavení)
 
 **Očekávaný výsledek:** Konfigurace je nastavena.
 
 ---
 
+## 5. Inicializace databáze
+
+### Krok 4: Spuštění setup scriptu
+
+```bash
+python setup.py
+```
+
+**Očekávaný výsledek:**
+
+```
+Database setup completed.
+```
+
+Script automaticky:
+- Vytvoří databázi (pokud neexistuje)
+- Spustí sql/ddl.sql (vytvoří tabulky)
+- Spustí sql/views.sql (vytvoří pohledy)
+
+Pokud vše proběhlo úspěšně, zobrazí se zpráva "Database setup completed."
+
+---
+
 ## 6. Spuštění aplikace
 
-### Krok 7: Spuštění Flask aplikace
+### Krok 5: Spuštění Flask aplikace
 
 ```bash
 python src/app.py
@@ -141,7 +105,7 @@ python src/app.py
  * Running on http://0.0.0.0:5000
 ```
 
-### Krok 8: Otevření aplikace v prohlížeči
+### Krok 6: Otevření aplikace v prohlížeči
 
 Otevřete webový prohlížeč a přejděte na:
 ```
@@ -159,7 +123,7 @@ http://localhost:5000
 
 ## 7. Test základní funkcionality
 
-### Krok 9: Přidání kategorie
+### Krok 7: Přidání kategorie
 
 1. Klikněte na "Add Category"
 2. Vyplňte:
@@ -171,7 +135,7 @@ http://localhost:5000
 - Zpráva: "Category added successfully!"
 - Kategorie se zobrazí v seznamu
 
-### Krok 10: Přidání autora
+### Krok 8: Přidání autora
 
 1. Klikněte na "Add Author"
 2. Vyplňte Name: `Isaac Asimov`
@@ -181,7 +145,7 @@ http://localhost:5000
 - Zpráva: "Author added successfully!"
 - Autor se zobrazí v seznamu
 
-### Krok 11: Přidání uživatele
+### Krok 9: Přidání uživatele
 
 1. Klikněte na "Add User"
 2. Vyplňte:
@@ -208,7 +172,7 @@ https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-s
 
 ### Problém 3: "Database not found"
 **Řešení:**
-- Zkontrolujte, že databáze `library_db` existuje
+- Spusťte `python setup.py` znovu
 - Zkontrolujte název databáze v `config/config.json`
 
 ### Problém 4: "ModuleNotFoundError: No module named 'flask'"

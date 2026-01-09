@@ -2,7 +2,7 @@
 
 **Autor:** Samuel Majer  
 **Třída:** C4c
-**Datum:** 11. 1. 2025  
+**Datum:** 09. 1. 2025  
 **Typ řešení:** D1 - Repository Pattern
 
 ---

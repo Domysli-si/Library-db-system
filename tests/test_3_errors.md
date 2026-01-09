@@ -2,8 +2,8 @@
 
 **Projekt:** Library DB System (D1)  
 **Verze:** 1.0  
-**Datum:** 2025-01-11  
-**Předpoklady:** Aplikace je nainstalována a běží (viz Scénář 1)
+**Datum:** 2025-01-09
+**Předpoklady:** Aplikace je nainstalována podle Scénáře 1 (setup.py byl spuštěn)
 
 ---
 
