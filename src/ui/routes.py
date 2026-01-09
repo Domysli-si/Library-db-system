@@ -66,7 +66,6 @@ def init_routes(app: Flask):
             published_date_str = request.form.get("published_date", "").strip()
             category_ids = request.form.getlist("categories")
 
-            # Validace
             errors = []
             if not title:
                 errors.append("Title is required")
@@ -450,7 +449,6 @@ def init_routes(app: Flask):
         try:
             with db_conn.transaction() as conn:
                 cursor = conn.cursor()
-                # Report ze 3 tabulek: book, author, category (přes book_category)
                 cursor.execute("""
                     SELECT 
                         a.name AS author_name,
