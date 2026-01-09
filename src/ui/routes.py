@@ -13,6 +13,8 @@ from src.models.book import Book
 from src.models.category import Category
 from src.models.library_user import LibraryUser
 from datetime import datetime
+import tempfile
+import os
 
 CONFIG_PATH = "config/config.json"
 
@@ -418,6 +420,8 @@ def init_routes(app: Flask):
         return redirect(url_for("loans"))
 
     # ========== IMPORT ==========
+
+
     @app.route("/import_json", methods=["GET", "POST"])
     def import_json():
         if request.method == "POST":
@@ -430,17 +434,26 @@ def init_routes(app: Flask):
                 flash("File must be JSON format", "error")
                 return redirect(url_for("import_json"))
 
+            tmp_path = None
             try:
-                file_path = f"/tmp/{file.filename}"
-                file.save(file_path)
-                import_service.import_from_json(file_path)
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp:
+                    file.save(tmp.name)
+                    tmp_path = tmp.name
+
+                import_service.import_from_json(tmp_path)
                 flash("JSON imported successfully!", "success")
+
             except DatabaseError as e:
                 flash(f"Import error: {e}", "error")
-            
+
+            finally:
+                if tmp_path and os.path.exists(tmp_path):
+                    os.remove(tmp_path)
+
             return redirect(url_for("index"))
 
         return render_template("import.html")
+
 
     # ========== REPORTS ==========
     @app.route("/report")
